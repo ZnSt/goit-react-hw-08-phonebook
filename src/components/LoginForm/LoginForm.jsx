@@ -1,42 +1,52 @@
 import React from 'react';
 import { useState } from 'react';
-import styled from '@emotion/styled';
+import { useDispatch } from 'react-redux';
 
+import styled from '@emotion/styled';
+import { logIn } from 'redux/auth/operations';
 export const LoginForm = () => {
-  const [logEmail, setLogEmail] = useState('');
-  const [logPassword, setLogPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
+    dispatch(logIn({ email, password }));
+    reset();
   };
 
   const handleChange = event => {
     switch (event.target.name) {
       case 'email':
-        setLogEmail(event.target.value);
+        setEmail(event.target.value);
         break;
       case 'password':
-        setLogPassword(event.target.value);
+        setPassword(event.target.value);
         break;
 
       default:
         return;
     }
   };
+
+  const reset = () => {
+    setEmail('');
+    setPassword('');
+  };
   return (
     <Form onSubmit={handleSubmit}>
       <Input
         type="email"
-        placeholder="User Email"
+        placeholder=" email"
         name="email"
-        value={logEmail}
+        value={email}
         onChange={handleChange}
       />
       <Input
         type="password"
-        placeholder="User Password"
+        placeholder=" password"
         name="password"
-        value={logPassword}
+        value={password}
         onChange={handleChange}
       />
       <Btn type="submit">Log in</Btn>
@@ -71,6 +81,7 @@ const Btn = styled.button`
   padding: 10px;
   font-size: 20px;
   margin-top: 30px;
+  cursor: pointer;
   transition: all 0.3s ease;
 
   :hover {

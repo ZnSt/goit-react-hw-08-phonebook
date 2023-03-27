@@ -1,54 +1,66 @@
 import React from 'react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
+import { registration } from 'redux/auth/operations';
 
 export const RegisterForm = () => {
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
+    dispatch(registration({ name, email, password }));
+    reset();
   };
 
   const handleChange = event => {
     const { name, value } = event.target;
     switch (name) {
       case 'name':
-        setUserName(value);
+        setName(value);
         break;
       case 'email':
-        setUserEmail(value);
+        setEmail(value);
         break;
       case 'password':
-        setUserPassword(value);
+        setPassword(value);
         break;
 
       default:
         return;
     }
   };
+
+  const reset = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+  };
   return (
     <Form onSubmit={handleSubmit}>
       <Input
         type="text"
-        placeholder="User Name"
+        placeholder=" name"
         name="name"
-        value={userName}
+        value={name}
         onChange={handleChange}
       />
       <Input
         type="email"
-        placeholder="User Email"
+        placeholder=" email"
         name="email"
-        value={userEmail}
+        value={email}
         onChange={handleChange}
       />
       <Input
         type="password"
-        placeholder="User Password"
+        placeholder=" password"
         name="password"
-        value={userPassword}
+        value={password}
         onChange={handleChange}
       />
       <Btn type="submit">Registration</Btn>
@@ -83,6 +95,7 @@ const Btn = styled.button`
   padding: 10px;
   font-size: 20px;
   margin-top: 30px;
+  cursor: pointer;
   transition: all 0.3s ease;
 
   :hover {

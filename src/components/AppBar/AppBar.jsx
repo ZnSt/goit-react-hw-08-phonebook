@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectorIsLoggedIn } from 'redux/auth/selectors';
 import { Navigation } from 'components/Navigation';
+import { UserMenu } from 'components/UserMenu';
 import { AuthNav } from 'components/AuthNav';
 
 export const AppBar = () => {
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
+  console.log(isLoggedIn);
   return (
     <div
       style={{
@@ -14,7 +19,8 @@ export const AppBar = () => {
       }}
     >
       <Navigation />
-      <AuthNav />
+
+      {isLoggedIn ? <UserMenu /> : <AuthNav />}
     </div>
   );
 };
