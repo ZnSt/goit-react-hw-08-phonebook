@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAllContacts } from 'redux/contacts/operations';
 import { Form } from 'components/Form';
+import { Filter } from 'components/Filter';
 import { ContactsList } from 'components/ContactsList';
 
 export const Contacts = () => {
@@ -14,7 +15,8 @@ export const Contacts = () => {
   return (
     <div>
       <Form />
-      {/* <ContactsList /> */}
+      <Filter />
+      <ContactsList />
     </div>
   );
 };

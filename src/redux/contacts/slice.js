@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logOut } from 'redux/auth/operations';
 import {
   fetchAllContacts,
   fetchAddContact,
@@ -7,12 +8,7 @@ import {
 const NAME = 'contactsList';
 
 const initialState = {
-  contacts: [
-    { id: 1, name: 'Jacon Verb', number: '325234523432' },
-    { id: 1, name: 'Jacon Verb', number: '325234523432' },
-    { id: 1, name: 'Jacon Verb', number: '325234523432' },
-    { id: 1, name: 'Jacon Verb', number: '325234523432' },
-  ],
+  contacts: [],
   filter: '',
   isLoading: false,
   error: null,
@@ -21,6 +17,14 @@ const initialState = {
 const contactsSlice = createSlice({
   name: NAME,
   initialState,
+  reducers: {
+    setFilter(state, action) {
+      return {
+        ...state,
+        filter: action.payload,
+      };
+    },
+  },
   extraReducers: {
     //   fetch
     [fetchAllContacts.pending](state, _) {
@@ -51,22 +55,29 @@ const contactsSlice = createSlice({
     },
 
     // delete
-    // [fetchDeleteContact.pending](state) {
-    //   state.isLoading = true;
-    // },
-    // [fetchDeleteContact.fulfilled](state, action) {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   const index = state.contacts.findIndex(
-    //     contact => contact.id === action.payload
-    //   );
-    //   state.contacts.splice(index, 1);
-    // },
-    // [fetchDeleteContact.rejected](state, action) {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // },
+    [fetchDeleteContact.pending](state) {
+      state.isLoading = true;
+    },
+    [fetchDeleteContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const index = state.contacts.findIndex(
+        contact => contact.id === action.payload
+      );
+      state.contacts.splice(index, 1);
+    },
+    [fetchDeleteContact.rejected](state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    [logOut.fulfilled](state) {
+      state.contacts = [];
+      state.error = null;
+      state.isLoading = false;
+    },
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
+export const { setFilter } = contactsSlice.actions;

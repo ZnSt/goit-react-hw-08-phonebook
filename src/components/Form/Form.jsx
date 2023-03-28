@@ -1,10 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-// import moment from 'moment';
+import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
-import { getVisibleContacts } from 'redux/contacts/selectors';
 import { fetchAddContact } from 'redux/contacts/operations';
 
 export const Form = () => {
