@@ -6,7 +6,6 @@ import { selectFilter } from 'redux/contacts/selectors';
 
 export const Filter = () => {
   const filter = useSelector(selectFilter);
-  console.log(filter);
   const dispatch = useDispatch();
 
   const handleChange = event => {
@@ -17,7 +16,7 @@ export const Filter = () => {
     <FilterContainer>
       <Input
         type="text"
-        placeholder="find contact"
+        placeholder="Find me"
         value={filter}
         onChange={handleChange}
       />
@@ -33,6 +32,9 @@ const FilterContainer = styled.div`
 `;
 
 const Input = styled.input`
-  width: 335px;
-  height: 30px;
+  width: 450px;
+  height: 40px;
+  border: 3px solid black;
+  border-radius: 5px;
+  font-size: 20px;
 `;

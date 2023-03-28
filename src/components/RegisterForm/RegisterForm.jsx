@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
+import { toast } from 'react-toastify';
 import { registration } from 'redux/auth/operations';
 
 export const RegisterForm = () => {
@@ -13,6 +14,9 @@ export const RegisterForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    if (name === '' || email === '' || password === '') {
+      return toast.error('Please, enter all fields');
+    }
     dispatch(registration({ name, email, password }));
     reset();
   };

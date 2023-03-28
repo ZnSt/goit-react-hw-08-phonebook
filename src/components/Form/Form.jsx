@@ -14,7 +14,7 @@ export const Form = () => {
   const handleSubmit = event => {
     event.preventDefault();
     if (name === '' || number === '') {
-      return toast.warning('Please, enter all fields');
+      return toast.error('Please, enter all fields');
     }
     dispatch(fetchAddContact({ name, number }));
     reset();

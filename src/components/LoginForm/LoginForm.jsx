@@ -1,7 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { toast } from 'react-toastify';
 import { logIn } from 'redux/auth/operations';
 
 export const LoginForm = () => {
@@ -11,6 +13,9 @@ export const LoginForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    if (email === '' || password === '') {
+      return toast.error('Please, enter all fields');
+    }
     dispatch(logIn({ email, password }));
     reset();
   };
@@ -34,23 +39,29 @@ export const LoginForm = () => {
     setPassword('');
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type="email"
-        placeholder=" email"
-        name="email"
-        value={email}
-        onChange={handleChange}
-      />
-      <Input
-        type="password"
-        placeholder=" password"
-        name="password"
-        value={password}
-        onChange={handleChange}
-      />
-      <Btn type="submit">Log in</Btn>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="email"
+          placeholder=" email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+        />
+        <Input
+          type="password"
+          placeholder=" password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+        />
+        <Btn type="submit">Log in</Btn>
+      </Form>
+      <RegistrContainer>
+        <LinkRegistr to="/register">Register</LinkRegistr>
+        <p style={{ marginLeft: '5px' }}>if you don't have an account yet.</p>
+      </RegistrContainer>
+    </>
   );
 };
 
@@ -88,4 +99,17 @@ const Btn = styled.button`
     color: white;
     background-color: black;
   }
+`;
+
+const RegistrContainer = styled.div`
+  text-align: center;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #857d7d;
+`;
+
+const LinkRegistr = styled(NavLink)`
+  color: #857d7d;
 `;

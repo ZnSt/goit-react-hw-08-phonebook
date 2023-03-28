@@ -9,7 +9,7 @@ import { ContactsList } from 'components/ContactsList';
 export const Contacts = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllContacts());
+    dispatch(fetchAllContacts()).unwrap();
   }, [dispatch]);
 
   return (

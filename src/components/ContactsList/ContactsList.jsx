@@ -3,17 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import { fetchDeleteContact } from 'redux/contacts/operations';
 import { getVisibleContacts } from 'redux/contacts/selectors';
+import { selectIsLoading } from 'redux/contacts/selectors';
+import { Loader } from 'components/Loader';
 
 export const ContactsList = () => {
   const contacts = useSelector(getVisibleContacts);
-  console.log(contacts);
+  const isLoading = useSelector(selectIsLoading);
   const dispacth = useDispatch();
 
   return (
     <Container>
-      {contacts.lenght === 0 ? (
-        <div>Empty</div>
-      ) : (
+      {isLoading && <Loader />}
+      {!isLoading && (
         <Ul>
           {contacts.map(contact => (
             <Li key={contact.id}>
@@ -59,4 +60,11 @@ const Btn = styled.button`
   border-radius: 4px;
   font-size: 15px;
   cursor: pointer;
+  transition: all 0.3s ease;
+
+  :hover {
+    color: white;
+    background-color: black;
+    border: none;
+  }
 `;
